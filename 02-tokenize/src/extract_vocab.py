@@ -55,9 +55,9 @@ custom_tokenizer.model_max_length = model_max_length
 logger.info('Evaluating custom tokenizer')
 test_sentence = 'covid virus in usa'
 logger.info(f'Test sentence: {test_sentence}')
-tokens = custom_tokenizer.encode(test_sentence).tokens
+tokens = custom_tokenizer.encode(test_sentence)
 logger.info(f'Encoded sentence: {tokens}')
-token_id = custom_tokenizer.token_to_id('covid')
+token_id = custom_tokenizer.encode('covid')
 logger.info(f'Token ID for token (covid) = {token_id}')
-vocab_size = custom_tokenizer.get_vocab_size()
+vocab_size = custom_tokenizer.vocab_size
 logger.info(f'Vocabulary size = {vocab_size}')
