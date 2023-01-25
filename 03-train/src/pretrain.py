@@ -109,7 +109,7 @@ if __name__ == '__main__':
     
     # Re-create GPT2 BPE tokenizer 
     logger.info(f'Re-creating GPT tokenizer using custom vocabulary from [{args.input_dir}/vocab/]')
-    tokenizer = GPT2TokenizerFast.from_pretrained(f'{LOCAL_INPUT_PATH}/vocab', pad_token='<|endoftext|>')
+    tokenizer = GPT2TokenizerFast.from_pretrained(path, pad_token='<|endoftext|>')
     tokenizer.model_max_length = MAX_LENGTH
     tokenizer.pad_token = tokenizer.eos_token
     logger.info(f'Tokenizer: {tokenizer}')
