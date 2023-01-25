@@ -34,7 +34,7 @@ tokenizer = GPT2TokenizerFast.from_pretrained(f'{LOCAL_INPUT_PATH}', pad_token='
 tokenizer.model_max_length = MAX_LENGTH
 logger.info(f'Tokenizer: {tokenizer}')
 
-# Read dataset and collate to create mini batches for Masked Language Model (MLM) training
+# Read dataset and collate to create mini batches for Causal Language Model (CLM) training
 logger.info('Reading and collating input data to create mini batches for Causal Language Model (CLM) training')
 dataset = load_dataset('text', data_files=f'{LOCAL_INPUT_PATH}/data/covid_articles.txt', split='train', cache_dir='/tmp/cache')
 logger.info(f'Dataset: {dataset}')
@@ -45,7 +45,6 @@ train_test_splits = dataset.train_test_split(shuffle=True, seed=123, test_size=0
 data_splits = DatasetDict({'train': train_test_splits['train'], 
                            'validation': train_test_splits['test']})
 logger.info(f'Data splits: {data_splits}')
-
 
 
 def tokenize(element):
@@ -59,6 +58,7 @@ def tokenize(element):
         if length == context_length:
             input_batch.append(input_ids)
     return {'input_ids': input_batch}
+
 
 # Tokenize dataset
 logger.info('Tokenizing dataset splits')
@@ -78,7 +78,3 @@ tokenized_datasets.save_to_disk(f'{LOCAL_OUTPUT_PATH}')
 logger.info('Validating if datasets were saved correctly')
 reloaded_dataset = datasets.load_from_disk(f'{LOCAL_OUTPUT_PATH}')
 logger.info(f'Reloaded dataset: {reloaded_dataset}')
-
-
-
-
