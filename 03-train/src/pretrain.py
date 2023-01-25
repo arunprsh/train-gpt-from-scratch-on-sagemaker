@@ -176,12 +176,13 @@ if __name__ == '__main__':
         if os.path.exists(f'{LOCAL_MODEL_DIR}/pytorch_model.bin') and os.path.exists(f'{LOCAL_MODEL_DIR}/config.json'):
             # Copy trained model from local directory of the training cluster to S3 
             logger.info(f'Copying saved model from local to [s3://{S3_BUCKET}/model/custom/]')
-            upload(f'{LOCAL_MODEL_DIR}/', f's3://{S3_BUCKET}/model/custom/', sm_session)
+            upload(f'{LOCAL_MODEL_DIR}/', f's3://{S3_BUCKET}/model/custom', sm_session)
 
             # Copy vocab.txt to local model directory - this is needed to re-create the trained MLM
             logger.info('Copying custom vocabulary to local model artifacts location to faciliate model evaluation')
-            shutil.copyfile(f'{path}/vocab.txt', f'{LOCAL_MODEL_DIR}/vocab.txt')
+            shutil.copyfile(f'{path}/vocab.json', f'{LOCAL_MODEL_DIR}/vocab.json')
+            shutil.copyfile(f'{path}/merges.txt', f'{LOCAL_MODEL_DIR}/merges.txt')
 
             # Copy vocab.txt to saved model artifacts location in S3
             logger.info(f'Copying custom vocabulary from [{path}/vocab.txt] to [s3://{S3_BUCKET}/model/custom/] for future stages of ML pipeline')
-            upload(f'{path}/', f's3://{S3_BUCKET}/model/custom/', sm_session)
+            upload(f'{path}/', f's3://{S3_BUCKET}/model/custom', sm_session)
