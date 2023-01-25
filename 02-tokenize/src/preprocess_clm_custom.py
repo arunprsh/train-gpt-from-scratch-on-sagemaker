@@ -30,7 +30,7 @@ N_GPUS = 1
 
 # Re-create GPT2 tokenizer using the saved custom vocabulary from the previous job
 logger.info(f'Re-creating GPT2 tokenizer using custom vocabulary from [{LOCAL_INPUT_PATH}/vocab/]')
-tokenizer = GPT2TokenizerFast.from_pretrained(f'{LOCAL_INPUT_PATH}', pad_token='<|endoftext|>')
+tokenizer = GPT2TokenizerFast.from_pretrained(f'{LOCAL_INPUT_PATH}/vocab', pad_token='<|endoftext|>')
 tokenizer.model_max_length = MAX_LENGTH
 logger.info(f'Tokenizer: {tokenizer}')
 
