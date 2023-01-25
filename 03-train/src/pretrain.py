@@ -125,6 +125,10 @@ if __name__ == '__main__':
     model_size = sum(t.numel() for t in clm.parameters())
     logger.info(f'GPT2 size: {model_size/1000**2:.1f}M parameters')
     
+    # Read dataset 
+    tokenized_datasets = datasets.load_from_disk(LOCAL_DATA_DIR)
+    logger.info(f'Tokenized datasets: {tokenized_datasets}')
+    
     # Create the DataCollator
     data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
     
